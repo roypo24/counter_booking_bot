@@ -163,12 +163,16 @@ def locate_all(image_name: str, confidence: float):
     return out
 
 
-def click_center(box) -> None:
+def click_center(box, x_offset=0, y_offset=0, do_click=True):
     x, y, w, h = box
-    cx = x + w // 2
-    cy = y + h // 2
-    pyautogui.moveTo(cx, cy, duration=0)
-    pyautogui.click()
+    cx = x + w // 2 + x_offset
+    cy = y + h // 2 + y_offset
+
+    print(f"CLICK DEBUG -> box={box} target=({cx}, {cy})")
+
+    pyautogui.moveTo(cx, cy, duration=0.6)   # זמנית איטי כדי לראות
+    if do_click:
+        pyautogui.click()
 
 
 def click_image_once(image_name: str, confidence: float = 0.84) -> bool:
@@ -251,16 +255,16 @@ def find_register_button():
 
 
 def go_to_schedule() -> None:
-    boxes = locate_all("tab_shiurim.png", 0.35)
+    boxes = locate_all("tab_shiurim.png", 0.60)
     log(f"tab_shiurim matches: {boxes}")
 
-    for _ in range(3):
-        if click_image_once("tab_shiurim.png", confidence=0.35):
-            time.sleep(0.8)
-            return
-        time.sleep(0.2)
+    if not boxes:
+        raise RuntimeError("Could not find שיעורים tab")
 
-    raise RuntimeError("Could not click שיעורים tab")
+    # נבחר את הראשון
+    click_center(boxes[0], x_offset=0, y_offset=8, do_click=True)
+    time.sleep(1.0)
+    log("Clicked שיעורים tab")
 
 
 def choose_day(day_key: str) -> None:

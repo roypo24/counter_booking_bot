@@ -251,7 +251,7 @@ def find_register_button():
 
 
 def go_to_schedule() -> None:
-    boxes = locate_all("tab_shiurim.png", 0.65)
+    boxes = locate_all("tab_shiurim.png", 0.3)
     log(f"tab_shiurim matches: {boxes}")
 
     for _ in range(3):

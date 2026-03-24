@@ -251,11 +251,11 @@ def find_register_button():
 
 
 def go_to_schedule() -> None:
-    boxes = locate_all("tab_shiurim.png", 0.3)
+    boxes = locate_all("tab_shiurim.png", 0.35)
     log(f"tab_shiurim matches: {boxes}")
 
     for _ in range(3):
-        if click_image_once("tab_shiurim.png", confidence=0.2):
+        if click_image_once("tab_shiurim.png", confidence=0.35):
             time.sleep(0.8)
             return
         time.sleep(0.2)
